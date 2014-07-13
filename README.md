@@ -1,36 +1,35 @@
 po.js
 =====
 
-Super-simple gettext translation in pure JS
+i10n for text in JS code. Based on pure JS.
 
 Advantages
 =====
-1. Lightweight: ~0.5KB
-2. No need in 3d-party dependencies like jQuery, Prototype etc.
-3. JSON is caching in localStorage. To reset cache simple add ?1 to json link (yeah, old-school).
+1. Lightweight: ~0.5 kB
+2. Caching the JSON into localStorage.
 
 Usage
 =====
 - Create JSON file from PO and store it on your server in public folder. I suggest you to use this converter - https://localise.biz/free/converter/po-to-json
-- Include po.min.js into your project
+- Include po.js into your project. Better, if you include the script and set locale for it at the "head" section of document.
+```html
+<script src="po.js"></script>
 ```
-<script src="po.min.js"></script>
+- Initialize your translation by calling `locale()` method and pass link to your converted JSON file. Don't pass a link for default language. Extension of the file must be `.json`.
+```javascript
+pojs.locale('ru-RU');
 ```
-- Initialize your translation by calling init() method and pass link to your converted JSON file. Not pass this link for default language.
-```
-pojs.init('/ru.json');
-```
-- In all your JS files replace all untranslated messages. po.js will find translation or will return this key otherwise.
-```
-pojs._('Hello world');
+- In all your JS files replace all untranslated messages.
+```javascript
+pojs('Hello world');
 ```
 - Simple sprintf emulation:
-```
-pojs._('My name is %s, and I am %s years old', ['Sasha', 24]);
+```javascript
+pojs('My name is %s, and I am %s years old', ['John', 99]);
 ```
 - If JSON is not cached it can take some time for JSON loading. So you should wrap all your code:
-```
+```javascript
 pojs.ready(function() {
-    pojs._('Hello world');
+    pojs('Hello world');
 });
 ```
